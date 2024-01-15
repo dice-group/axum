@@ -194,6 +194,8 @@ where
                     Some(conn) => conn,
                     None => continue,
                 };
+
+                let _ = tcp_stream.set_nodelay(true);
                 let tcp_stream = TokioIo::new(tcp_stream);
 
                 poll_fn(|cx| make_service.poll_ready(cx))
