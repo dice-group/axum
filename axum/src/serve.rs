@@ -195,7 +195,7 @@ where
                     None => continue,
                 };
 
-                let _ = tcp_stream.set_nodelay(true);
+                tcp_stream.set_nodelay(true).unwrap();
                 let tcp_stream = TokioIo::new(tcp_stream);
 
                 poll_fn(|cx| make_service.poll_ready(cx))
@@ -312,6 +312,7 @@ where
                         break;
                     }
                 };
+                tcp_stream.set_nodelay(true).unwrap();
                 let tcp_stream = TokioIo::new(tcp_stream);
 
                 trace!("connection {remote_addr} accepted");
